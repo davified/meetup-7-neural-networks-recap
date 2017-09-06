@@ -11864,7 +11864,14 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5-Typical-steps-in-approaching-a-deep-learning-problem">5 Typical steps in approaching a deep learning problem<a class="anchor-link" href="#5-Typical-steps-in-approaching-a-deep-learning-problem">&#182;</a></h2>
+<h2 id="5-Typical-steps-in-approaching-a-deep-learning-problem">5 Typical steps in approaching a deep learning problem<a class="anchor-link" href="#5-Typical-steps-in-approaching-a-deep-learning-problem">&#182;</a></h2><ul>
+<li>Find out the dimensions and shapes of the training data (X) and training labels (y)</li>
+<li>Specify the architecture of your neural network model (Construction phase)</li>
+<li>Train model (Execution phase)</li>
+<li>Optimize hyperparameters</li>
+<li>Use model</li>
+</ul>
+
 </div>
 </div>
 </div></section><section>
@@ -12158,8 +12165,8 @@ a.anchor-link {
 </ul>
 </li>
 <li>forward propagation: compute output of the function</li>
-<li>backward propagation: compute derivative of the function</li>
-<li>vector: a matrix<ul>
+<li>backward propagation: compute derivative of the error</li>
+<li>vector: 1-dimensional array<ul>
 <li>e.g. v == (5, 0) == [5 0]</li>
 <li>e.g. u == (5, 2, 0) == [5 2 0]</li>
 <li>Vectorized implementations can be hundreds of times faster than a for-loop implementation.</li>
@@ -12176,7 +12183,11 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Building-and-training-a-neural-network">Building and training a neural network<a class="anchor-link" href="#Building-and-training-a-neural-network">&#182;</a></h2>
+<h2 id="Building-and-training-a-neural-network">Building and training a neural network<a class="anchor-link" href="#Building-and-training-a-neural-network">&#182;</a></h2><p><code>./bin/setup.sh</code></p>
+<p><code>source .venv/bin/activate</code></p>
+<p><code>jupyter notebook</code></p>
+<p>click on <code>mnist-starter.ipynb</code></p>
+
 </div>
 </div>
 </div></section><section>
@@ -12427,7 +12438,9 @@ RfiBoAg/EBThB4Ii/EBQ/weCC5r/92q6mAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># 1. Instantiate model</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.5</span><span class="n">x</span> <span class="o">+</span> <span class="mi">20</span> 
+
+<span class="c1"># 1. Instantiate model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span> 
 
 <span class="c1"># 2. Add layers</span>
@@ -12705,7 +12718,116 @@ Epoch 2/2
 </div>
 </div>
 
-</div></div></section></section>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Transfer-learning">Transfer learning<a class="anchor-link" href="#Transfer-learning">&#182;</a></h2>
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-transfer-learning">What is transfer learning<a class="anchor-link" href="#What-is-transfer-learning">&#182;</a></h3><ul>
+<li><p>Taking a neural network that was trained on a set of images for a given task (e.g. image recognition) and apply it to a new task (e.g. radiology diagnosis)</p>
+<ul>
+<li>First stage is known as <strong>pre-training</strong></li>
+<li>Second stage is known as <strong>fine-tuning</strong></li>
+</ul>
+</li>
+<li><p>This works because the model learns knowledge/features (e.g. lines, edges, curves) from the pre-training phase, and this knowledge is transferrable to different tasks</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="How-to-implement-transfer-learning">How to implement transfer learning<a class="anchor-link" href="#How-to-implement-transfer-learning">&#182;</a></h3><ul>
+<li>Take a pre-trained network (e.g. VGG, InceptionV3)</li>
+<li>Pop off <strong>output layer</strong> and delete its input weights and biases</li>
+<li>Add new output layer and initialize new weights (randomly initialized) and biases (zeros)</li>
+<li>Train entire model</li>
+</ul>
+<p><img src="./assets/transfer-learning.png" alt="transfer-learning"></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="When-does-transfer-learning-make-sense?">When does transfer learning make sense?<a class="anchor-link" href="#When-does-transfer-learning-make-sense?">&#182;</a></h3><ul>
+<li>When pre-training tasks and finetuning tasks have the same input (e.g. image, or wave file)</li>
+<li>When you have very little data</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="More-resources-on-transfer-learning:">More resources on transfer learning:<a class="anchor-link" href="#More-resources-on-transfer-learning:">&#182;</a></h3><ul>
+<li><a href="https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html">https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html</a></li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Transfer-learning-hands-on">Transfer learning hands-on<a class="anchor-link" href="#Transfer-learning-hands-on">&#182;</a></h2>
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Beer-bottles-counter">Beer bottles counter<a class="anchor-link" href="#Beer-bottles-counter">&#182;</a></h4><ul>
+<li>Go to AWS EC2 P2 instance: <a href="http://ec2-52-35-173-110.us-west-2.compute.amazonaws.com:8888/tree/code/beer-bottles-counter">http://ec2-52-35-173-110.us-west-2.compute.amazonaws.com:8888/tree/code/beer-bottles-counter</a></li>
+<li>password: ask david</li>
+<li>open <code>beer-bottles-counter-simplified.ipynb</code></li>
+</ul>
+<h4 id="Cats-vs-dogs">Cats vs dogs<a class="anchor-link" href="#Cats-vs-dogs">&#182;</a></h4><ul>
+<li>Go to AWS EC2 P2 instance: <a href="http://ec2-52-35-173-110.us-west-2.compute.amazonaws.com:8888/notebooks/nbs/tw-ml-meetup/cats-vs-dog-template.ipynb">http://ec2-52-35-173-110.us-west-2.compute.amazonaws.com:8888/notebooks/nbs/tw-ml-meetup/cats-vs-dog-template.ipynb</a></li>
+<li>navigate to code/beer-bottles-counter</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section></section>
 </div>
 </div>
 
